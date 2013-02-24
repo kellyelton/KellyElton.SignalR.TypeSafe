@@ -7,6 +7,8 @@
 
     using HubServer.Coms;
 
+    using KellyElton.SignalR.TypeSafe.ExtensionMethods;
+
     using Microsoft.AspNet.SignalR;
 
     using Shared.Coms;

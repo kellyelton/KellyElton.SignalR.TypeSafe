@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     using HubServer.Coms;
-    using KellyElton.SignalR.TypeSafe;
+
     using KellyElton.SignalR.TypeSafe.ExtensionMethods;
     using Shared.Coms;
 
