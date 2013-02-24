@@ -17,6 +17,15 @@
             Host = WebApplication.Start<Setup>("http://localhost:12345");
             Console.WriteLine("Hub Started");
 
+            //wait for a client to latch on.
+            Thread.Sleep(8000);
+
+            Console.WriteLine("Sending a message from outside of the hub");
+            // Get hub context
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<TestHub>();
+            var messenger = new KellyElton.SignalR.TypeSafe.HubContextMessenger<Shared.Coms.IServerToClientComs>(hubContext.Clients);
+            messenger.All.Hello("Anyone out there?");
+
             Console.WriteLine("Press the q key to quit.");
 
             var keepRunning = true;
