@@ -1,4 +1,4 @@
-﻿namespace KellyElton.SignalR.TypeSafe
+﻿namespace KellyElton.SignalR.TypeSafe.ExtensionMethods
 {
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
