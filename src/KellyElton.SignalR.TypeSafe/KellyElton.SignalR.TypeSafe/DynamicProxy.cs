@@ -1,6 +1,7 @@
 ﻿namespace KellyElton.SignalR.TypeSafe
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -66,15 +67,21 @@
 
         public DynamicProxyOnBuilder On<T1,TReturn>(Expression<Func<T, Func<T1, TReturn>>> expression) where TReturn : class
         {
-            ConstantExpression methExpression = null;
-            var obj = (expression.Body is UnaryExpression ? ((UnaryExpression)expression.Body).Operand : expression.Body);
-            var callExpression = obj as MethodCallExpression;
-            if (callExpression != null) methExpression = (ConstantExpression)callExpression.Object;
-            var methodInfo = methExpression.Value as MethodInfo;
+            var methodInfo =(MethodInfo)
+                ((ConstantExpression)((MethodCallExpression)((UnaryExpression)expression.Body).Operand).Arguments.Last())
+                    .Value;
+            //ConstantExpression methExpression = null;
+            //var obj = (expression.Body is UnaryExpression ? ((UnaryExpression)expression.Body).Operand : expression.Body);
+            //var callExpression = obj as MethodCallExpression;
+            
+            //Debug.WriteLine(callExpression.Object == null);
+            //Debug.WriteLine(callExpression.Object.GetType());
+            //if (callExpression != null) methExpression = (ConstantExpression)callExpression.Object;
+            //var methodInfo = methExpression.Value as MethodInfo;
 
             var ret = new DynamicProxyOnBuilder();
-            this.ProxyCalls.Set(methodInfo.GetHashCode(),ret);
-            return ret ;
+            this.ProxyCalls.Set(methodInfo.GetHashCode(), ret);
+            return ret;
         }
 
         /// <summary>
